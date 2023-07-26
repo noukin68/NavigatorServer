@@ -1,24 +1,22 @@
 const express = require('express');
-const mysql = require('mysql');
+var mysql = require('mysql');
 const cors = require('cors');
 
 const app = express();
-const port = 5000;
+const port = 3000;
 
-const db = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: 'root',
-  database: 'navigator',
+var db  = mysql.createPool({
+  connectionLimit : 10,
+  host: 'marencid.beget.tech',
+  user: 'marencid_map',
+  password: 'Root123',
+  database: 'marencid_map',
 });
 
-db.connect((err) => {
-  if (err) {
-    throw err;
-  }
-  console.log('Connected to MySQL database');
+db.query('SELECT 1 + 1 AS solution', function (error, results, fields) {
+  if (error) throw error;
+  console.log('The solution is: ', results[0].solution);
 });
-
 
 app.use(cors());
 app.use(express.json());
