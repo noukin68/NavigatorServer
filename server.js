@@ -73,6 +73,64 @@ app.post('/register', (req, res) => {
       }
     );
 });
+
+// Маршрут для добавления точки в базу данных
+app.post('/addPoint', async (req, res) => {
+  const { latitude, longitude, name } = req.body;
+
+  try {
+    db.query(
+      'INSERT INTO points (latitude, longitude, name) VALUES (?, ?, ?)',
+      [latitude, longitude, name],
+      (err, results) => {
+        if (err) {
+          return res.status(500).json({ message: 'Ошибка базы данных' });
+        }
+
+        res.status(200).json({ id: result.insertId });
+      }
+    );
+  } catch (error) {
+    console.error('Error inserting data:', error);
+    res.status(500).json({ error: 'An error occurred while inserting data.' });
+  }
+});
+
+// Маршрут для получения всех точек  из базы данных
+app.get('/getPoints', async (req, res) => {
+  try {
+    db.query(
+      'SELECT * FROM points',
+      (err, results) => {
+        if (err) {
+          return res.status(500).json({ message: 'Ошибка базы данных' });
+        }
+
+        return res.status(200).json(rows);
+      }
+    );
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    res.status(400).json({ error: 'An error occurred while fetching data.' });
+  }
+});
+
+// Маршрут для получения точки
+app.get('/getPointPes', async (req, res) => {
+  const { latitude, longitude } = req.body;
+
+  db.query(
+    'SELECT * FROM points WHERE latitude = ? AND longitude = ?',
+      [latitude, longitude],
+    (err, results) => {
+      if (err) {
+        return res.status(500).json({ message: 'Ошибка базы данных' });
+      }
+
+      return res.status(200).json({ message: 'Точка успешно получена' });
+    }
+  );
+});
   
 // Запуск сервера
 app.listen(port, () => {
