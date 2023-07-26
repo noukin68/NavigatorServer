@@ -7,7 +7,7 @@ const port = 3000;
 
 var db  = mysql.createPool({
   connectionLimit : 10,
-  host: 'marencid.beget.tech',
+  host: 'localhost',
   user: 'marencid_map',
   password: 'Root123',
   database: 'marencid_map',
