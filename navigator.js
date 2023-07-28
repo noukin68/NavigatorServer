@@ -21,7 +21,7 @@ app.use(cors());
 app.use(express.json());
 
 //Вход пользователя по номеру телефона
-app.post('/login', (req, res) => {
+app.post('/loginPhone', (req, res) => {
     const { phoneNumber } = req.body;
   
     if (!phoneNumber) {
@@ -49,7 +49,7 @@ app.post('/login', (req, res) => {
 });
 
 //Регистрация пользователя
-app.post('/register', (req, res) => {
+app.post('/registerPhone', (req, res) => {
     const { phoneNumber } = req.body;
   
     if (!phoneNumber) {
